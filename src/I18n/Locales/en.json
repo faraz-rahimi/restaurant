@@ -1,0 +1,82 @@
+{
+  "nav": {
+    "contact": "Contact",
+    "about": "About",
+    "menu": "Menu"
+  },
+  "user": {
+    "profile": "Profile",
+    "orders": "Orders",
+    "exit": "Exit",
+    "login": "Login"
+  },
+  "lang": {
+    "title": "Language"
+  },
+  "hero": {
+    "btn": "see menu",
+    "heading": "Order now without getting tired!"
+  },
+  "card": {
+    "title": "Best foods of the week"
+  },
+  "Login": {
+    "title": "Login",
+    "submit": "sign up",
+    "username": "username",
+    "password": "password",
+    "sentence": "Don't you have an account?",
+    "error": "Invalid username or password!"
+  },
+  "SignUp": {
+    "title": "sign up",
+    "submit": "sign up",
+    "loginText": "login",
+    "username": "username",
+    "password": "password",
+    "confirmPassword": "confirm password",
+    "sentence": "Do you have an account?",
+    "errorMatch": "Passwords do not match!",
+    "errorLength": "Username (min 5) or password (min 8) is too short!"
+  },
+  "orders": {
+    "title": "My Orders",
+    "empty": "You haven't placed any orders yet.",
+    "orderNumber": "Order No.",
+    "cooking": "Cooking",
+    "ready": "Ready to serve!",
+    "total": "Total Amount",
+    "currency": "$"
+  },
+  "checkout": {
+    "cartTitle": "Shopping Cart",
+    "emptyCart": "Your cart is empty!",
+    "returnToMenu": "Return to Menu",
+    "addToCart": "Add to Cart",
+    "loginRequired": "Please log in to your account first.",
+    "quantity": "Quantity:",
+    "totalPayable": "Total Payable:",
+    "totalAmount": "Total Amount:",
+    "submitting": "Processing...",
+    "submitBtn": "Complete Order",
+    "errorMsg": "An error occurred while placing the order. Please try again.",
+    "trackOrders": "Track Orders",
+    "orderNumber": "Order",
+    "currency": "$",
+    "total": "Total:",
+    "cooking": "Preparing",
+    "ready": "Ready!"
+  },
+  "info": {
+    "aboutTitle": "About Foodino",
+    "aboutText": "Foodino is a modern and smart online food ordering platform. Our goal in this project was to provide a fast, secure, and seamless user experience (UX). Utilizing clean architecture and modern web technologies, this system establishes smooth communication between customers and restaurants.",
+    "contactTitle": "Contact Us",
+    "contactSubtitle": "For collaborations or suggestions, reach out to us through the following channels.",
+    "address": "Office Address",
+    "addressText": "Foodino Building, Mirdamad Intersection, Valiasr St, Tehran",
+    "phone": "Phone Number",
+    "phoneText": "+98 21 1234 5678",
+    "email": "Email Address",
+    "emailText": "info@foodino.com"
+  }
+}
