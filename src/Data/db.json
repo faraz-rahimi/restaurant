@@ -199,6 +199,5 @@
       "createdAt": 1791047912636,
       "id": "IjbbwWfG25A"
     }
-  ],
-  "$schema": "./node_modules/json-server/schema.json"
+  ]
 }

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 import Home from "./Pages/Home.tsx";
 import Menu from "./Pages/Menu.tsx";
 import Cart from "./Pages/Cart.tsx";
@@ -80,6 +81,24 @@ const App = () => {
         </div>
       )}
 
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          style: {
+            direction: "rtl",
+            fontFamily: "inherit",
+            background: "#18181b",
+            color: "#fff",
+            border: "1px solid rgba(249, 115, 22, 0.35)",
+          },
+          success: {
+            iconTheme: { primary: "#22c55e", secondary: "#fff" },
+          },
+          error: {
+            iconTheme: { primary: "#f97316", secondary: "#fff" },
+          },
+        }}
+      />
       <Header />
       <main>
         <Routes>

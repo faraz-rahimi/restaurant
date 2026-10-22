@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import toast from "react-hot-toast";
 import userApi from "../API/users";
 import orderApi from "../API/orders";
 
@@ -121,7 +122,7 @@ const CompleteOrder = () => {
       await userApi.patch(`/${userId}`, { cart: [] });
       fetchData();
     } catch (error) {
-      alert(t("checkout.errorMsg"));
+      toast.error(t("checkout.errorMsg"));
     } finally {
       setIsSubmitting(false);
     }

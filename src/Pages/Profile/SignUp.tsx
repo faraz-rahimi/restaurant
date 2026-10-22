@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import toast from "react-hot-toast";
 import api from "../../API/users.ts";
 
 const SignUp = () => {
@@ -13,11 +14,11 @@ const SignUp = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      alert(t("SignUp.errorMatch"));
+      toast.error(t("SignUp.errorMatch"));
       return;
     }
     if (username.length < 5 || password.length < 8) {
-      alert(t("SignUp.errorLength"));
+      toast.error(t("SignUp.errorLength"));
       return;
     }
 

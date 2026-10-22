@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import api from "../../API/users.ts";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -25,7 +26,7 @@ const Login = () => {
         localStorage.setItem("userId", ValidUser.id);
         navigate("/");
       } else {
-        alert(t("Login.error"));
+        toast.error(t("Login.error"));
       }
     } catch (error) {
       console.error("Login failed:", error);

@@ -2,6 +2,7 @@ import api from "../API/products";
 import userApi from "../API/users";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import toast from "react-hot-toast";
 
 type LocalizedField = Record<string, string>;
 
@@ -62,7 +63,7 @@ const FoodCard = () => {
   const handleIncrement = async (product: Product) => {
     const userId = localStorage.getItem("userId");
     if (!userId) {
-      alert(
+      toast.error(
         t("checkout.loginRequired") ||
           "please log in to add items to your cart.",
       );
