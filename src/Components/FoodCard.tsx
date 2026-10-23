@@ -67,7 +67,7 @@ const FoodCard = () => {
     if (!userId) {
       toast.error(
         t("checkout.loginRequired") ||
-          "please log in to add items to your cart.",
+          "please sign in to add items to your cart.",
       );
       return;
     }

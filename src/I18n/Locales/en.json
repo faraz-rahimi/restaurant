@@ -8,7 +8,7 @@
     "profile": "Profile",
     "orders": "Orders",
     "exit": "Exit",
-    "login": "Login"
+    "login": "Sign in"
   },
   "lang": {
     "title": "Language"
@@ -21,26 +21,26 @@
     "title": "Best foods of the week"
   },
   "Login": {
-    "title": "Login",
+    "title": "Sign in",
     "submit": "sign up",
     "username": "username",
     "password": "password",
     "sentence": "Don't you have an account?",
     "error": "Invalid username or password!",
-    "success": "Welcome back! You are logged in.",
-    "failedMsg": "Could not log you in. Please try again."
+    "success": "Welcome back! You are signed in.",
+    "failedMsg": "Could not sign you in. Please try again."
   },
   "SignUp": {
     "title": "sign up",
     "submit": "sign up",
-    "loginText": "login",
+    "loginText": "sign in",
     "username": "username",
     "password": "password",
     "confirmPassword": "confirm password",
     "sentence": "Do you have an account?",
     "errorMatch": "Passwords do not match!",
     "errorLength": "Username (min 5) or password (min 8) is too short!",
-    "successMsg": "Account created! Please log in.",
+    "successMsg": "Account created! Please sign in.",
     "failedMsg": "Could not create your account. Please try again."
   },
   "orders": {
@@ -60,7 +60,7 @@
     "addedToCart": "Added to cart",
     "cartError": "Could not update your cart. Please try again.",
     "successMsg": "Your order was placed successfully!",
-    "loginRequired": "Please log in to your account first.",
+    "loginRequired": "Please sign in to your account first.",
     "quantity": "Quantity:",
     "totalPayable": "Total Payable:",
     "totalAmount": "Total Amount:",
