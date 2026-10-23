@@ -5,6 +5,18 @@
       "password": "12345678",
       "cart": [],
       "id": "fAhgRCrpfOw"
+    },
+    {
+      "username": "fr133",
+      "password": "fr13921392",
+      "cart": [],
+      "id": "dRgzinbVqzQ"
+    },
+    {
+      "username": "fr132",
+      "password": "fr13921392",
+      "cart": [],
+      "id": "0jz0WmMxqfU"
     }
   ],
   "Products": [
@@ -199,5 +211,6 @@
       "createdAt": 1791047912636,
       "id": "IjbbwWfG25A"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

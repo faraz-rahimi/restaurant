@@ -24,12 +24,14 @@ const Login = () => {
 
       if (ValidUser) {
         localStorage.setItem("userId", ValidUser.id);
+        toast.success(t("Login.success"));
         navigate("/");
       } else {
         toast.error(t("Login.error"));
       }
     } catch (error) {
       console.error("Login failed:", error);
+      toast.error(t("Login.failedMsg"));
     }
   };
 

@@ -26,7 +26,9 @@
     "username": "username",
     "password": "password",
     "sentence": "Don't you have an account?",
-    "error": "Invalid username or password!"
+    "error": "Invalid username or password!",
+    "success": "Welcome back! You are logged in.",
+    "failedMsg": "Could not log you in. Please try again."
   },
   "SignUp": {
     "title": "sign up",
@@ -37,7 +39,9 @@
     "confirmPassword": "confirm password",
     "sentence": "Do you have an account?",
     "errorMatch": "Passwords do not match!",
-    "errorLength": "Username (min 5) or password (min 8) is too short!"
+    "errorLength": "Username (min 5) or password (min 8) is too short!",
+    "successMsg": "Account created! Please log in.",
+    "failedMsg": "Could not create your account. Please try again."
   },
   "orders": {
     "title": "My Orders",
@@ -53,6 +57,9 @@
     "emptyCart": "Your cart is empty!",
     "returnToMenu": "Return to Menu",
     "addToCart": "Add to Cart",
+    "addedToCart": "Added to cart",
+    "cartError": "Could not update your cart. Please try again.",
+    "successMsg": "Your order was placed successfully!",
     "loginRequired": "Please log in to your account first.",
     "quantity": "Quantity:",
     "totalPayable": "Total Payable:",

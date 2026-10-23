@@ -1,7 +1,8 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import "./App.tsx"
+// @ts-expect-error CSS imports are handled by the bundler.
+import "./App.css"
 import App from "./App.tsx";
 import "./I18n/I18n.ts";
 

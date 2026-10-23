@@ -52,11 +52,13 @@ const FoodCard = () => {
 
   const updateCartInDB = async (newCart: any[]) => {
     const userId = localStorage.getItem("userId");
-    if (!userId) return;
+    if (!userId) return false;
     try {
       await userApi.patch(`/${userId}`, { cart: newCart });
+      return true;
     } catch (error) {
       console.error("خطا در آپدیت سبد خرید:", error);
+      return false;
     }
   };
 
@@ -88,7 +90,15 @@ const FoodCard = () => {
     }
 
     setCartItems(newCart);
-    await updateCartInDB(newCart);
+    const isSaved = await updateCartInDB(newCart);
+
+    if (isSaved) {
+      toast.success(
+        `${t("checkout.addedToCart")}: ${product.title[i18n.language]}`,
+      );
+    } else {
+      toast.error(t("checkout.cartError"));
+    }
   };
 
   const handleDecrement = async (product: Product) => {

@@ -29,9 +29,11 @@ const SignUp = () => {
         cart: [],
         id: String(Date.now()),
       });
+      toast.success(t("SignUp.successMsg"));
       navigate("/login");
     } catch (error) {
       console.error("SignUp failed:", error);
+      toast.error(t("SignUp.failedMsg"));
     }
   };
 

@@ -120,6 +120,7 @@ const CompleteOrder = () => {
 
       await orderApi.post("/", newOrder);
       await userApi.patch(`/${userId}`, { cart: [] });
+      toast.success(t("checkout.successMsg"));
       fetchData();
     } catch (error) {
       toast.error(t("checkout.errorMsg"));
