@@ -23,6 +23,19 @@ const SignUp = () => {
     }
 
     try {
+      const response = await api.get("/");
+      const normalizedUsername = username.trim().toLowerCase();
+      const usernameExists = (response.data as { username: string }[]).some(
+        (u) =>
+          typeof u?.username === "string" &&
+          u.username.trim().toLowerCase() === normalizedUsername,
+      );
+
+      if (usernameExists) {
+        toast.error(t("SignUp.errorExists"));
+        return;
+      }
+
       await api.post("/", {
         username,
         password,
@@ -30,7 +43,7 @@ const SignUp = () => {
         id: String(Date.now()),
       });
       toast.success(t("SignUp.successMsg"));
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       console.error("SignUp failed:", error);
       toast.error(t("SignUp.failedMsg"));

@@ -40,6 +40,7 @@
     "sentence": "Do you have an account?",
     "errorMatch": "Passwords do not match!",
     "errorLength": "Username (min 5) or password (min 8) is too short!",
+    "errorExists": "This account already exists. Please choose another username.",
     "successMsg": "Account created! Please sign in.",
     "failedMsg": "Could not create your account. Please try again."
   },
