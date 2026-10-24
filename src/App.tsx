@@ -36,7 +36,7 @@ const App = () => {
   }, []);
 
   return (
-    <>
+    <div className="flex min-h-screen flex-col">
       {introVisible && (
         <div
           dir="rtl"
@@ -100,7 +100,7 @@ const App = () => {
         }}
       />
       <Header />
-      <main>
+      <main className="height-full">
         <Routes>
           <Route index element={<Home />} />
           <Route path="/menu" element={<Menu />} />
@@ -110,7 +110,7 @@ const App = () => {
         </Routes>
       </main>
       <Footer />
-    </>
+    </div>
   );
 };
 

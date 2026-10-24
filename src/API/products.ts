@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:3000/Products",
+  baseURL: "https://restaurunt-api.fwebstack.workers.dev/Products",
 });
 
 export default api;

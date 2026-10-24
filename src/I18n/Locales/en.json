@@ -18,7 +18,8 @@
     "heading": "Order now without getting tired!"
   },
   "card": {
-    "title": "Best foods of the week"
+    "title": "Best foods of the week",
+    "removed": "item removed from the cart"
   },
   "Login": {
     "title": "Sign in",

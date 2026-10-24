@@ -43,7 +43,8 @@ const SignUp = () => {
         id: String(Date.now()),
       });
       toast.success(t("SignUp.successMsg"));
-      navigate("/");
+      
+        navigate("/Login");
     } catch (error) {
       console.error("SignUp failed:", error);
       toast.error(t("SignUp.failedMsg"));

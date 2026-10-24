@@ -112,6 +112,7 @@ const FoodCard = () => {
         newCart[existingItemIndex].quantity -= 1;
       } else {
         newCart.splice(existingItemIndex, 1);
+        toast.success(t("card.removed"))
       }
 
       setCartItems(newCart);

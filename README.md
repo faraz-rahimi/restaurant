@@ -14,7 +14,7 @@
 
 * **Order History Tracking**: Displays previously submitted orders with creation timestamps (`createdAt`), order status badges, itemized breakdowns, and total costs.
 
-* **User Authentication Flow**: Dedicated **Login** (`/login`) and **Sign Up** (`/signUp`) pages integrated with the `/Users` API endpoint and persistent client storage.
+* **User Authentication Flow**: Dedicated **Login** (`/login`) and **Sign Up** (`/signUp`) pages integrated with the `/Users` API endpoint and persistent client storage.(Not secured)
 
 * **Responsive Mobile-First UI**: Adapts across desktop, tablet, and mobile viewports using a custom `useIsMobile` hook, animated hamburger navigation (`hamburger-react`), and smooth section scrolling (`Hero`, `About`, `Contact`).
 
@@ -49,7 +49,7 @@ restaurant/
 │       ├── mrgherity.webp
 │       └── peperony.webp
 ├── src/
-│   ├── API/                     # Axios API client modules (localhost:3000)
+│   ├── API/                     # Axios API client modules (restaurunt-api.fwebstack.workers.dev)
 │   │   ├── orders.ts
 │   │   ├── products.ts
 │   │   └── users.ts
@@ -62,8 +62,6 @@ restaurant/
 │   │   ├── Hero.tsx
 │   │   ├── LoginIcon.tsx
 │   │   └── Logo.tsx
-│   ├── Data/
-│   │   └── db.json              # Mock database (Users, Products, Orders)
 │   ├── Hooks/                   # Custom React hooks
 │   │   ├── useIsMobile.ts
 │   │   └── useLocalStorage.ts
@@ -118,22 +116,15 @@ npm install
 
 ```
 
-### 4. Start the Mock Backend Server (`json-server`)
+### 4. Backend API
 
-The application uses **Axios** (`src/API/*.ts`) to communicate with a local REST API running on **`http://localhost:3000`**. Start `json-server` watching `src/Data/db.json` in your first terminal window:
+The application uses **Axios** (`src/API/*.ts`) to communicate with the hosted REST API at **`https://restaurunt-api.fwebstack.workers.dev`** — no local server or `json-server` is required. The following endpoints are available:
 
-```
-npx json-server --watch src/Data/db.json --port 3000
+* `https://restaurunt-api.fwebstack.workers.dev/Products` — Bilingual food menu items
 
-```
+* `https://restaurunt-api.fwebstack.workers.dev/Users` — User accounts and active cart data
 
-Once started, the following endpoints will be available:
-
-* `http://localhost:3000/Products` — Bilingual food menu items
-
-* `http://localhost:3000/Users` — User accounts and active cart data
-
-* `http://localhost:3000/Orders` — Submitted customer orders
+* `https://restaurunt-api.fwebstack.workers.dev/Orders` — Submitted customer orders
 
 ### 5. Start the Frontend Development Server (Vite)
 
@@ -161,9 +152,9 @@ Navigate to the local URL shown in your terminal (typically **`http://localhost:
 
 | Resource | Endpoint | Methods | Description | 
 | ----- | ----- | ----- | ----- | 
-| **Products** | `http://localhost:3000/Products` | `GET` | Fetches the bilingual restaurant menu items, images, descriptions, and prices. | 
-| **Users** | `http://localhost:3000/Users` | `GET`, `POST`, `PATCH` | Manages user registration, login authentication, and user cart state. | 
-| **Orders** | `http://localhost:3000/Orders` | `GET`, `POST` | Retrieves historical orders and records newly checked-out orders. | 
+| **Products** | `https://restaurunt-api.fwebstack.workers.dev/Products` | `GET` | Fetches the bilingual restaurant menu items, images, descriptions, and prices. | 
+| **Users** | `https://restaurunt-api.fwebstack.workers.dev/Users` | `GET`, `POST`, `PATCH` | Manages user registration, login authentication, and user cart state. | 
+| **Orders** | `https://restaurunt-api.fwebstack.workers.dev/Orders` | `GET`, `POST` | Retrieves historical orders and records newly checked-out orders. | 
 
 ## 👤 Author
 
