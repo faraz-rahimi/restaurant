@@ -31,15 +31,21 @@ const Header = () => {
   }, [savedLang, i18n]);
 
   useEffect(() => {
+    let active = true;
     const fetchFreshUserData = async () => {
       const userId = localStorage.getItem("userId");
 
-      if (userId) {
-        try {
-          const response = await api.get(`/${userId}`);
-          setUser(response.data);
-        } catch (error) {
-          console.error("مشکل در دریافت اطلاعات کاربر:", error);
+      if (!userId) {
+        setUser(null);
+        return;
+      }
+
+      try {
+        const response = await api.get(`/${userId}`);
+        if (active) setUser(response.data);
+      } catch (error) {
+        console.error("مشکل در دریافت اطلاعات کاربر:", error);
+        if (active) {
           localStorage.removeItem("userId");
           setUser(null);
         }
@@ -47,24 +53,31 @@ const Header = () => {
     };
 
     fetchFreshUserData();
+    return () => {
+      active = false;
+    };
   }, [location.pathname]);
 
   const handleLogout = () => {
     localStorage.removeItem("userId");
     setUser(null);
+    setIsProfileOpen(false);
   };
 
   const dropDown = () => {
-    setOpen(!isOpen);
+    setOpen((open) => !open);
   };
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isOpen) setOpen(false);
+      if (e.key === "Escape") {
+        setOpen(false);
+        setIsProfileOpen(false);
+      }
     };
     window.addEventListener("keydown", handleEscape);
     return () => window.removeEventListener("keydown", handleEscape);
-  }, [isOpen]);
+  }, []);
 
   const handleLanguageSelect = (lng: string) => {
     setSavedLang(lng);
@@ -110,32 +123,41 @@ const Header = () => {
               {t("nav.menu")}
             </Link>
           </li>
-          <button
-            onClick={() => handleScrollToSection("contact")}
-            className={
-              isMobile
-                ? "text-black bold text-lg cursor-pointer"
-                : "text-orange-600 transition-colors cursor-pointer"
-            }
-          >
-            {t("nav.contact")}
-          </button>
+          <li>
+            <button
+              type="button"
+              onClick={() => handleScrollToSection("contact")}
+              className={
+                isMobile
+                  ? "text-black font-semibold text-lg cursor-pointer"
+                  : "text-orange-600 transition-colors cursor-pointer"
+              }
+            >
+              {t("nav.contact")}
+            </button>
+          </li>
 
-          <button
-            onClick={() => handleScrollToSection("about")}
-            className={
-              isMobile
-                ? "text-black bold text-lg cursor-pointer"
-                : "text-orange-600 transition-colors cursor-pointer"
-            }
-          >
-            {t("nav.about")}
-          </button>
+          <li>
+            <button
+              type="button"
+              onClick={() => handleScrollToSection("about")}
+              className={
+                isMobile
+                  ? "text-black font-semibold text-lg cursor-pointer"
+                  : "text-orange-600 transition-colors cursor-pointer"
+              }
+            >
+              {t("nav.about")}
+            </button>
+          </li>
           <li>
             {user ? (
               <div className="relative">
                 <button
-                  onClick={() => setIsProfileOpen(!isProfileOpen)}
+                  type="button"
+                  aria-expanded={isProfileOpen}
+                  aria-haspopup="true"
+                  onClick={() => setIsProfileOpen((open) => !open)}
                   className="flex items-center gap-2 text-orange-600 font-bold bg-orange-100 px-4 py-2 rounded-xl transition-colors cursor-pointer"
                 >
                   <span>{user.username}</span>
@@ -201,6 +223,9 @@ const Header = () => {
 
       <div className="relative">
         <button
+          type="button"
+          aria-expanded={isOpen}
+          aria-haspopup="true"
           className="text-orange-600 font-semibold text-xl flex items-center gap-1 hover:text-orange-700 transition-colors"
           onClick={dropDown}
         >
