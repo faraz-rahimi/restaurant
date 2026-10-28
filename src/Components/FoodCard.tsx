@@ -14,28 +14,46 @@ interface Product {
   description: LocalizedField;
 }
 
+interface CartItem {
+  productId: string;
+  quantity: number;
+  title?: LocalizedField;
+  price?: LocalizedField;
+  photo?: string;
+}
+
 const FoodCard = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const [cartItems, setCartItems] = useState<any[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
+    let cancelled = false;
+
     const fetchProducts = async () => {
       try {
         const response = await api.get("/");
-        setProducts(response.data);
+
+        if (!cancelled) {
+          setProducts(response.data);
+        }
       } catch (error) {
-        console.error("error in getting data from database", error);
+        console.error("Error getting products from API:", error);
       }
     };
 
     const fetchUserCart = async () => {
       const userId = localStorage.getItem("userId");
+
       if (!userId) return;
 
       try {
-        const userResponse = await userApi.get(`/${userId}`);
-        setCartItems(userResponse.data.cart || []);
+        const response = await userApi.get(`/${userId}`);
+
+        if (!cancelled) {
+          setCartItems(response.data.cart || []);
+        }
       } catch (error) {
         console.error("خطا در دریافت سبد خرید:", error);
       }
@@ -43,18 +61,29 @@ const FoodCard = () => {
 
     fetchProducts();
     fetchUserCart();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const getProductQuantity = (productId: string) => {
-    const item = cartItems.find((cartItem) => cartItem.productId === productId);
-    return item ? item.quantity : 0;
+    return (
+      cartItems.find((item) => item.productId === productId)
+        ?.quantity ?? 0
+    );
   };
 
-  const updateCartInDB = async (newCart: any[]) => {
+  const updateCartInDB = async (newCart: CartItem[]) => {
     const userId = localStorage.getItem("userId");
+
     if (!userId) return false;
+
     try {
-      await userApi.patch(`/${userId}`, { cart: newCart });
+      await userApi.patch(`/${userId}`, {
+        cart: newCart,
+      });
+
       return true;
     } catch (error) {
       console.error("خطا در آپدیت سبد خرید:", error);
@@ -64,21 +93,23 @@ const FoodCard = () => {
 
   const handleIncrement = async (product: Product) => {
     const userId = localStorage.getItem("userId");
+
     if (!userId) {
       toast.error(
         t("checkout.loginRequired") ||
-          "please sign in to add items to your cart.",
+          "Please sign in to add items to your cart."
       );
       return;
     }
 
-    let newCart = [...cartItems];
-    const existingItemIndex = newCart.findIndex(
-      (item: any) => item.productId === product.id,
+    const newCart = cartItems.map((item) => ({ ...item }));
+
+    const existingItem = newCart.find(
+      (item) => item.productId === product.id
     );
 
-    if (existingItemIndex !== -1) {
-      newCart[existingItemIndex].quantity += 1;
+    if (existingItem) {
+      existingItem.quantity += 1;
     } else {
       newCart.push({
         productId: product.id,
@@ -90,11 +121,16 @@ const FoodCard = () => {
     }
 
     setCartItems(newCart);
+
     const isSaved = await updateCartInDB(newCart);
 
     if (isSaved) {
       toast.success(
-        `${t("checkout.addedToCart")}: ${product.title[i18n.language]}`,
+        `${t("checkout.addedToCart")}: ${
+          product.title[i18n.language] ??
+          product.title.en ??
+          ""
+        }`
       );
     } else {
       toast.error(t("checkout.cartError"));
@@ -102,104 +138,140 @@ const FoodCard = () => {
   };
 
   const handleDecrement = async (product: Product) => {
-    let newCart = [...cartItems];
+    const newCart = cartItems.map((item) => ({ ...item }));
+
     const existingItemIndex = newCart.findIndex(
-      (item: any) => item.productId === product.id,
+      (item) => item.productId === product.id
     );
 
-    if (existingItemIndex !== -1) {
-      if (newCart[existingItemIndex].quantity > 1) {
-        newCart[existingItemIndex].quantity -= 1;
-      } else {
-        newCart.splice(existingItemIndex, 1);
-        toast.success(t("card.removed"))
-      }
+    if (existingItemIndex === -1) return;
 
-      setCartItems(newCart);
-      await updateCartInDB(newCart);
+    if (newCart[existingItemIndex].quantity > 1) {
+      newCart[existingItemIndex].quantity -= 1;
+    } else {
+      newCart.splice(existingItemIndex, 1);
+      toast.success(t("card.removed"));
+    }
+
+    setCartItems(newCart);
+
+    const isSaved = await updateCartInDB(newCart);
+
+    if (!isSaved) {
+      toast.error(t("checkout.cartError"));
     }
   };
 
   return (
-    <div className="w-full py-8">
-      <div className="flex overflow-x-auto gap-6 px-4 md:px-8 pb-8 no-scrollbar snap-x snap-mandatory">
-        {products.map((product) => {
-          const quantity = getProductQuantity(product.id);
+    <>
+      {products.map((product) => {
+        const quantity = getProductQuantity(product.id);
+        const language = i18n.language;
 
-          return (
-            <div
-              key={product.id}
-              className="min-w-[280px] sm:min-w-[320px] shrink snap-center bg-amber-100 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:shadow-[0_8px_30px_rgb(234,88,12,0.15)] transition-all duration-300 overflow-hidden group border flex flex-col"
-            >
-              <div className="relative h-52 overflow-hidden">
-                <img
-                  src={product.photo}
-                  alt="food"
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute top-4 inset-e-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full shadow-sm">
-                  <span className="font-bold text-gray-800 text-sm">
-                    {product.price[i18n.language]}
-                  </span>
-                </div>
-              </div>
+        const title =
+          product.title?.[language] ??
+          product.title?.en ??
+          Object.values(product.title ?? {})[0] ??
+          "";
 
-              <div className="p-5 flex flex-col grow">
-                <h3 className="font-extrabold text-xl text-gray-800 mb-2 truncate">
-                  {product.title[i18n.language]}
-                </h3>
+        const price =
+          product.price?.[language] ??
+          product.price?.en ??
+          Object.values(product.price ?? {})[0] ??
+          "";
 
-                <p className="text-gray-500 text-sm line-clamp-2 mb-6 grow leading-relaxed">
-                  {product.description[i18n.language]}
-                </p>
+        const description =
+          product.description?.[language] ??
+          product.description?.en ??
+          Object.values(product.description ?? {})[0] ??
+          "";
 
-                <div className="mt-auto">
-                  {quantity > 0 ? (
-                    <div className="flex items-center justify-between bg-white/60 rounded-xl px-2 py-1.5 shadow-sm border border-orange-200">
-                      <button
-                        onClick={() => handleDecrement(product)}
-                        className="w-10 h-10 flex justify-center items-center bg-orange-100 text-orange-600 rounded-lg hover:bg-orange-200 transition-colors font-bold text-xl"
-                      >
-                        -
-                      </button>
-                      <span className="font-bold text-gray-800 text-lg min-w-[30px] text-center">
-                        {quantity}
-                      </span>
-                      <button
-                        onClick={() => handleIncrement(product)}
-                        className="w-10 h-10 flex justify-center items-center bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors font-bold text-xl shadow-md"
-                      >
-                        +
-                      </button>
-                    </div>
-                  ) : (
-                    <button
-                      onClick={() => handleIncrement(product)}
-                      className="w-full bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white py-3 rounded-xl flex justify-center items-center gap-2 font-bold transition-all shadow-md hover:shadow-lg"
-                    >
-                      <svg
-                        className="w-5 h-5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                        />
-                      </svg>
-                      {t("checkout.addToCart") || "افزودن به سبد خرید"}
-                    </button>
-                  )}
-                </div>
+        return (
+          <article
+            key={product.id}
+            dir={i18n.dir()}
+            className="group flex w-[280px] shrink-0 snap-start flex-col overflow-hidden rounded-3xl bg-amber-100 shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-shadow duration-300 hover:shadow-[0_8px_30px_rgb(234,88,12,0.15)] sm:w-[320px]"
+          >
+            <div className="relative h-52 shrink-0 overflow-hidden">
+              <img
+                src={product.photo}
+                alt={title}
+                loading="lazy"
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+
+              <div className="absolute inset-e-4 top-4 rounded-full bg-white/90 px-3 py-1 shadow-sm backdrop-blur-sm">
+                <span className="text-sm font-bold text-gray-800">
+                  {price}
+                </span>
               </div>
             </div>
-          );
-        })}
-      </div>
-    </div>
+
+            <div className="flex grow flex-col p-5">
+              <h3 className="mb-2 truncate text-xl font-extrabold text-gray-800">
+                {title}
+              </h3>
+
+              <p className="mb-6 line-clamp-2 grow text-sm leading-relaxed text-gray-500">
+                {description}
+              </p>
+
+              <div className="mt-auto">
+                {quantity > 0 ? (
+                  <div className="flex items-center justify-between rounded-xl border border-orange-200 bg-white/60 px-2 py-1.5 shadow-sm">
+                    <button
+                      type="button"
+                      onClick={() => handleDecrement(product)}
+                      aria-label="Decrease quantity"
+                      className="flex h-10 w-10 items-center justify-center rounded-lg bg-orange-100 text-xl font-bold text-orange-600 transition-colors hover:bg-orange-200"
+                    >
+                      -
+                    </button>
+
+                    <span className="min-w-[30px] text-center text-lg font-bold text-gray-800">
+                      {quantity}
+                    </span>
+
+                    <button
+                      type="button"
+                      onClick={() => handleIncrement(product)}
+                      aria-label="Increase quantity"
+                      className="flex h-10 w-10 items-center justify-center rounded-lg bg-orange-500 text-xl font-bold text-white shadow-md transition-colors hover:bg-orange-600"
+                    >
+                      +
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => handleIncrement(product)}
+                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-orange-500 py-3 font-bold text-white shadow-md transition-all hover:bg-orange-600 hover:shadow-lg active:bg-orange-700"
+                  >
+                    <svg
+                      className="h-5 w-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13L4.7 15.3c-.63.63-.18 1.7.7 1.7H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                      />
+                    </svg>
+
+                    {t("checkout.addToCart") ||
+                      "افزودن به سبد خرید"}
+                  </button>
+                )}
+              </div>
+            </div>
+          </article>
+        );
+      })}
+    </>
   );
 };
 
