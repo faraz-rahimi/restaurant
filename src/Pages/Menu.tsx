@@ -52,7 +52,6 @@ const Menu = () => {
             aria-label="Scroll menu left"
             aria-controls="menu-slider"
             onClick={() => scrollSlider("left")}
-            disabled={!canScrollLeft}
             className="rounded-full bg-white p-3 text-orange-500 shadow-md hover:bg-orange-50 disabled:cursor-not-allowed disabled:opacity-40"
           >
             &#8249;
