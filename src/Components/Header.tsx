@@ -157,7 +157,9 @@ const Header = () => {
                 </button>
 
                 {isProfileOpen && (
-                  <div className="absolute top-full mt-2 end-0 w-48 bg-white border border-gray-100 rounded-2xl shadow-xl py-2 z-50 flex flex-col overflow-hidden">
+                  <div
+                    className={`absolute ${isMobile ? "bottom-full mb-2" : "top-full mt-2"} end-0 w-48 bg-white border border-gray-100 rounded-2xl shadow-xl py-2 z-50 flex flex-col overflow-hidden`}
+                  >
                     <Link
                       to="/orders"
                       onClick={() => setIsProfileOpen(false)}
