@@ -31,7 +31,7 @@ const Home = () => {
         <About />
       </section>
 
-      <section>
+      <section className="flex justify-between">
         <h2 className="text-amber-100 m-2.5 text-3xl font-medium">
           {t("card.title")}
         </h2>
