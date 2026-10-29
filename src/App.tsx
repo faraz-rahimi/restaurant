@@ -4,11 +4,10 @@ import { Toaster } from "react-hot-toast";
 import Home from "./Pages/Home.tsx";
 import Menu from "./Pages/Menu.tsx";
 import Cart from "./Pages/Cart.tsx";
-import Header from "./Components/Header.tsx";
-import Footer from "./Components/Footer.jsx";
 import Login from "./Pages/Profile/Login.jsx";
 import SignUp from "./Pages/Profile/SignUp.tsx";
 import PageNotFound from "./Pages/PageNotFound.tsx";
+import MainLayout from "./Components/Layout.tsx";
 
 const App = () => {
   const [introVisible, setIntroVisible] = useState(false);
@@ -100,18 +99,18 @@ const App = () => {
           },
         }}
       />
-      <Header />
-      <main className="height-full">
-        <Routes>
+      
+      <Routes>
+        <Route element={<MainLayout />}>
           <Route index element={<Home />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/orders" element={<Cart />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signUp" element={<SignUp />} />
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-      </main>
-      <Footer />
+        </Route>
+      
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
     </div>
   );
 };
