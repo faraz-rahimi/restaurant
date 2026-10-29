@@ -8,6 +8,7 @@ import Header from "./Components/Header.tsx";
 import Footer from "./Components/Footer.jsx";
 import Login from "./Pages/Profile/Login.jsx";
 import SignUp from "./Pages/Profile/SignUp.tsx";
+import PageNotFound from "./Pages/PageNotFound.tsx";
 
 const App = () => {
   const [introVisible, setIntroVisible] = useState(false);
@@ -107,6 +108,7 @@ const App = () => {
           <Route path="/orders" element={<Cart />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signUp" element={<SignUp />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </main>
       <Footer />
