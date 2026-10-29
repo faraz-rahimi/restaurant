@@ -23,28 +23,7 @@ const Footer = () => {
           <p className="max-w-xs text-sm leading-7 text-[#b8aaa0]">
             {t("footer.description")}
           </p>
-
-          <div className="flex gap-3">
-            <a
-              href="https://instagram.com/"
-              target="_blank"
-              rel="noreferrer"
-              aria-label={t("footer.instagram")}
-              className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-sm font-bold transition hover:border-orange-500/50 hover:bg-orange-500/10 hover:text-orange-400"
-            >
-              IG
-            </a>
-
-            <a
-              href="https://t.me/"
-              target="_blank"
-              rel="noreferrer"
-              aria-label={t("footer.telegram")}
-              className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-sm font-bold transition hover:border-orange-500/50 hover:bg-orange-500/10 hover:text-orange-400"
-            >
-              TG
-            </a>
-          </div>
+          
         </div>
 
         <div>
