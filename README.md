@@ -4,13 +4,6 @@
 
 **Foodino** is a modern, responsive, and bilingual (English & Persian) single-page restaurant web application built with **React 19**, **TypeScript**, **Vite**, and **Tailwind CSS v4**. Designed and developed by [**Faraz Rahimi**](https://github.com/faraz-rahimi), Foodino delivers an interactive online food ordering experience featuring a custom animated intro screen, dynamic menu browsing, real-time shopping cart synchronization with a remote REST API, order history tracking, 3D graphics readiness, and automatic RTL/LTR layout switching.
 
-## 📸 Screenshots (Desktop & Mobile Views)
-
-| 🖥️ Desktop View (`1440×900`) | 📱 Mobile View (`390×844`) |
-| :---: | :---: |
-|  |  |
-| **Full desktop navigation bar, wide Hero banner, horizontal "Best foods of the week" carousel, and multi-column contact cards** *(Replace URL with `./public/Assets/desktop-preview.jpg`)* | **Collapsible hamburger drawer (`hamburger-react`), responsive single-column Hero banner, and touch-friendly stacked food cards** *(Replace URL with `./public/Assets/mobile-preview.jpg`)* |
-
 ## ✨ Complete Features & Capabilities
 
 1. **Bilingual Internationalization (i18n) & Automatic RTL/LTR Switching:**
