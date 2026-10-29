@@ -87,5 +87,24 @@
     "phoneText": "+98 21 1234 5678",
     "email": "Email Address",
     "emailText": "info@foodino.com"
+  },
+  "footer": {
+    "description": "Delicious food, easy choices, and a delightful online ordering experience.",
+    "instagram": "Instagram",
+    "telegram": "Telegram",
+    "quickLinks": "Quick Links",
+    "home": "Home",
+    "menu": "Our Menu",
+    "cart": "Shopping Cart",
+    "login": "Sign In",
+    "whyFoodino": "Why Foodino?",
+    "feature1": "🍽️ A variety of delicious meals",
+    "feature2": "🥬 Fresh ingredient selection",
+    "feature3": "🛒 An easy ordering experience",
+    "feature4": "✨ Simple and user-friendly design",
+    "contactUs": "Contact Us",
+    "contactDescription": "Have a question or suggestion? We'd love to hear from you.",
+    "copyright": "© {{year}} Foodino. All rights reserved.",
+    "madeWithLove": "Made with love for food lovers ❤️"
   }
 }
